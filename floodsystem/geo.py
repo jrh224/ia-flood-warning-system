@@ -8,11 +8,11 @@ geographical data.
 
 import importlib
 from .utils import sorted_by_key  # noqa
+from haversine import haversine, Unit
 
 
 def stations_by_distance(stations, p):
     "Takes a list of station data in the MonitoringStation form, and a coordinate and returns a list of tuples of the station name and its distance from that point."
-    from haversine import haversine, Unit
     l = []
     for e in stations:
         Station = None
@@ -25,5 +25,15 @@ def stations_by_distance(stations, p):
         p = (Station, Distance)
         l.append(p)
     return sorted_by_key(l)
+
+
+def stations_within_radius(stations, centre, r):
+    true_stations = []
+    for station in stations:
+        distance = haversine(station.coord, centre)
+        if distance < r:
+            true_stations.append(station)
+    return(true_stations)
+
 
 
