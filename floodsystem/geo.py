@@ -33,5 +33,22 @@ def stations_within_radius(stations, centre, r):
             true_stations.append(station)
     return(true_stations)
 
+def  rivers_with_station(stations):
+    rivers = set()
+    for e in stations:
+        rivers.add(e.river)
+    return rivers
 
+def stations_by_river(stations):
+    from .geo import rivers_with_station
+    stat_river = {}
+    rivers = rivers_with_station(stations)
+    for i in rivers:
+        station_list = []
+        for j in stations:
+            if i == j.river:
+                station_list.append(j.name)
+            stat_river[i] = station_list
+    return stat_river
+   
 
