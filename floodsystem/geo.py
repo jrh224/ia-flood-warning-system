@@ -11,21 +11,19 @@ from .utils import sorted_by_key  # noqa
 from haversine import haversine, Unit
 
 
+
+
 def stations_by_distance(stations, p):
     "Takes a list of station data in the MonitoringStation form, and a coordinate and returns a list of tuples of the station name and its distance from that point."
     l = []
     for e in stations:
-        Station = None
-        if "station_id" in e:
-            Station = e["station_id"]
-        Coord = None
-        if "coord" in e:
-            Coord = e["coord"]
+        Station = e.name
+        
+        Coord = e.coord
         Distance = haversine(Coord,p)
-        p = (Station, Distance)
-        l.append(p)
-    return sorted_by_key(l)
-
+        z = (Station, Distance)
+        l.append(z)
+    return sorted_by_key(l,1)
 
 def stations_within_radius(stations, centre, r):
     true_stations = []
