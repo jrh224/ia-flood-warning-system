@@ -75,3 +75,19 @@ def test_stations_by_river():
 
 
 
+def test_rivers_by_station_number():
+    s_id = "test-s-id"
+    m_id = "test-m-id"
+    label = "some station"
+    trange = (-2.3, 3.4445)
+    river = "River X"
+    town = "My Town"
+    testList = []
+    testList.append(MonitoringStation(s_id, m_id, 'Blackford Bridge', (30.0,70.0), trange, 'River Way', town))
+    testList.append(MonitoringStation(s_id, m_id, 'Shipley', (45.6,90.5), trange, 'River Way', town))
+    testList.append(MonitoringStation(s_id, m_id, 'Chew Stoke', (30.0,70.0), trange, 'Costa Beck', town))
+    testList.append(MonitoringStation(s_id, m_id, 'Chalford', (45.6,90.5), trange, 'Costa Beck', town))
+    testList.append(MonitoringStation(s_id, m_id, 'Kings Pond', (30.0,70.0), trange, 'Dean', town))
+    testList.append(MonitoringStation(s_id, m_id, 'Saltaire', (45.6,90.5), trange, 'River Way', town))
+    assert len(rivers_by_station_number(testList,2)) == 2
+    assert rivers_by_station_number(testList,2)[0][1] ==3

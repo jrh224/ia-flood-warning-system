@@ -34,12 +34,14 @@ def stations_within_radius(stations, centre, r):
     return(true_stations)
 
 def  rivers_with_station(stations):
+    "given a list of station objects, returns a set with the names of the rivers with a monitoring station"
     rivers = set()
     for e in stations:
         rivers.add(e.river)
     return rivers
 
 def stations_by_river(stations):
+    "Takes a list of MonitoringStation objects and returns a dictionary mapping river names to a list of stations on that river"
     from .geo import rivers_with_station
     stat_river = {}
     rivers = rivers_with_station(stations)
@@ -51,4 +53,20 @@ def stations_by_river(stations):
             stat_river[i] = station_list
     return stat_river
    
+def rivers_by_station_number(stations, N):
+    "Takes a list of MonitoringStation objects and a number N and returns a list of N (river name, number of stations) tuples, with the highest number of stations, sorted by the number of stations"
+    from.geo import stations_by_river
+    stat_river = stations_by_river(stations)
+    river_and_number = []
+    for river in stat_river:
+        number = len(stat_river[river])
+        river_and_number.append((river,number))
+    ordered = sorted_by_key(river_and_number,1,reverse=True)
+    return ordered[:N]
+
+
+
+
+
+
 
