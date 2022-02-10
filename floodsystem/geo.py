@@ -26,6 +26,7 @@ def stations_by_distance(stations, p):
     return sorted_by_key(l,1)
 
 def stations_within_radius(stations, centre, r):
+    "Takes a list of MonitoringStation objects, a coordinate and a radius and returns a list of all the stations within that radius of the coordinate"
     true_stations = []
     for station in stations:
         distance = haversine(station.coord, centre)
