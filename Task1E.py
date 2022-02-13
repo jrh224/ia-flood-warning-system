@@ -3,7 +3,7 @@ from floodsystem.stationdata import build_station_list
 
 def run():
     "Requirement for task 1E"
-    rivers = rivers_by_station_number(build_station_list(), 9)
+    rivers = rivers_by_station_number(build_station_list(), 10)
     print(rivers)
 
 

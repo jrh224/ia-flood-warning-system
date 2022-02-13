@@ -7,6 +7,7 @@ geographical data.
 """
 
 import importlib
+from re import I
 from .utils import sorted_by_key  # noqa
 from haversine import haversine, Unit
 
@@ -27,6 +28,7 @@ def stations_by_distance(stations, p):
 
 def stations_within_radius(stations, centre, r):
     "Takes a list of MonitoringStation objects, a coordinate and a radius and returns a list of all the stations within that radius of the coordinate"
+
     true_stations = []
     for station in stations:
         distance = haversine(station.coord, centre)
@@ -62,8 +64,19 @@ def rivers_by_station_number(stations, N):
     for river in stat_river:
         number = len(stat_river[river])
         river_and_number.append((river,number))
+    
     ordered = sorted_by_key(river_and_number,1,reverse=True)
-    return ordered[:N]
+    new_ordered = ordered[:N]
+    i = 1
+    
+
+    while new_ordered[-1][1] == ordered[N-1+i][1]:
+        new_ordered.append(ordered[N-1+i])
+        i += 1
+        
+        print(ordered[N+i])
+    return new_ordered
+
 
 
 
