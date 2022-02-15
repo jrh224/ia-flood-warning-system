@@ -1,9 +1,7 @@
-from floodsystem.plot import plot_water_levels
+from floodsystem.plot import plot_water_level_with_fit
 from floodsystem.stationdata import build_station_list, update_water_levels
 from floodsystem.datafetcher import fetch_measure_levels
 import datetime
-
-from floodsystem.analysis import *
 
 def run():
 
@@ -13,21 +11,24 @@ def run():
     #Update water levels
     update_water_levels(stations)
 
-    #Remove stations without water level data
+    #Remove stations without water data
     stations_with_water = []
     for station in stations:
         if station.latest_level != None:
             stations_with_water.append(station)
 
-    #Sort stations by water level
     sorted_by_water = sorted(stations_with_water, key=lambda MonitoringStation: MonitoringStation.latest_level, reverse=True)
-    
+    i = 0
+    j = 0
+    while j < 6:
+        dates, levels = fetch_measure_levels(sorted_by_water[i].measure_id, dt=datetime.timedelta(days=2))
 
-    for i in range(5):
-        dates, levels = fetch_measure_levels(sorted_by_water[i].measure_id, dt=datetime.timedelta(days=10))
-        plot_water_levels(sorted_by_water[i], dates, levels)
-
+        try:
+            plot_water_level_with_fit(sorted_by_water[i], dates, levels, 4)
+            i+=1
+            j+=1
+        except:
+            print(sorted_by_water[i].name + ' did not have enough data for the past two days and so cannot be plotted.')
+            i+=1
 
 run()
-
-
