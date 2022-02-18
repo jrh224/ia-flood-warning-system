@@ -31,12 +31,17 @@ def stations_highest_rel_level(stations, N):
         level = MonitoringStation.relative_water_level(station)
         
         if level != None:
-            station_and_level.append((station,level))
-  
-    sorted_by_key(station_and_level, 1, True )
+            station_and_level.append((station,float(level)))
+            
+    station_and_level = sorted_by_key(station_and_level, 1, True )
     new_list = station_and_level[:N]
+    i = 0
+    while new_list[-1][1] == station_and_level[N-1+i][1]:
+        new_list.append(station_and_level[N-1+i])
+        i += 1
     list_of_stations = []
     for z in new_list:
         list_of_stations.append(z[0])
+
     
     return list_of_stations

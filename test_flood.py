@@ -14,7 +14,7 @@ def test_stations_level_over_threshold():
 def test_stations_highest_rel_level():
     stations = build_station_list()
     test_data = stations_highest_rel_level(stations, 11)
-    assert len(test_data) == 11
+    assert len(test_data) == 11 or test_data[-1] == test_data[-2]
     assert MonitoringStation.relative_water_level(test_data[0]) > MonitoringStation.relative_water_level(test_data[1])
     
 

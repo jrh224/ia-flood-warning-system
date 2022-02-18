@@ -74,7 +74,7 @@ def rivers_by_station_number(stations, N):
         new_ordered.append(ordered[N-1+i])
         i += 1
         
-        print(ordered[N+i])
+    
     return new_ordered
 
 
