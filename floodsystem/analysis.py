@@ -4,6 +4,8 @@ import matplotlib
 from floodsystem.datafetcher import fetch_measure_levels
 import datetime
 
+from floodsystem.station import MonitoringStation
+
 def polyfit(dates, levels, p):
 
     # Find coefficients of best-fit polynomial f(x) of degree p
@@ -17,7 +19,7 @@ def polyfit(dates, levels, p):
 
 
 def rising_polynomial(station):
-    #Find slope of station and return true if positive at most recent value
+    'Find slope of station and return true if positive at most recent value'
 
     #Extract water levels over last 2 days
     dates, levels = fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=2))
@@ -40,3 +42,29 @@ def rising_polynomial(station):
         return True
     else:
         return False
+
+def relative_risk(station):
+    number = 0
+    relative_level = MonitoringStation.relative_water_level(station)
+    if relative_level == None:
+        number = None
+    else:
+        if relative_level > 1:
+            number += 1
+        if relative_level > 1.5:
+            number += 1
+        if relative_level > 3:
+            number+= 1
+        if relative_level > 10:
+            number +=1
+        if relative_level > 0.5:
+            try:
+                rising = rising_polynomial(station)
+                if rising == True:
+                    number += 1
+                elif rising == False:
+                    number -= 1
+            except:
+                number = None
+    return number
+
