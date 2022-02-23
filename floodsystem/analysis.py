@@ -44,6 +44,7 @@ def rising_polynomial(station):
         return False
 
 def relative_risk(station):
+    'returns a numerical relative risk for a station'
     number = 0
     relative_level = MonitoringStation.relative_water_level(station)
     if relative_level == None:
@@ -66,5 +67,5 @@ def relative_risk(station):
                     number -= 1
             except:
                 number = None
-                
+
     return number
