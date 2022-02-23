@@ -66,5 +66,5 @@ def relative_risk(station):
                     number -= 1
             except:
                 number = None
+                
     return number
-
