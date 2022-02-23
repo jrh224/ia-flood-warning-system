@@ -1,6 +1,8 @@
-import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+from floodsystem.datafetcher import fetch_measure_levels
+import datetime
 
 def polyfit(dates, levels, p):
 
@@ -14,3 +16,12 @@ def polyfit(dates, levels, p):
     return poly, dates[-1]
 
 
+def rising_polynomial(station):
+    
+    dates, levels = fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=2))
+    dates = matplotlib.dates.date2num(dates)
+
+    polynomial, dateshift = polyfit(dates, levels, 4)
+    derivative = polynomial.deriv()
+    print(polynomial)
+    print(derivative)
