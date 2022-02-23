@@ -31,8 +31,6 @@ def plot_water_level_with_fit(station, dates, levels, p):
     datesShifted = []
     for date in datesConverted:
         datesShifted.append(date - datesConverted[-1])
-    print(datesShifted)
-    print(levels)
 
     #Calculate polynomial and shift
     poly, d0 = polyfit(datesShifted, levels, p)

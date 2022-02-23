@@ -17,11 +17,26 @@ def polyfit(dates, levels, p):
 
 
 def rising_polynomial(station):
-    
+    #Find slope of station and return true if positive at most recent value
+
+    #Extract water levels over last 2 days
     dates, levels = fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=2))
     dates = matplotlib.dates.date2num(dates)
 
-    polynomial, dateshift = polyfit(dates, levels, 4)
+    #Shift dates to make polyfit function more stable
+    datesShifted = []
+    for date in dates:
+        datesShifted.append(date - dates[-1])
+    
+    #Find polynomial and first derivative
+    polynomial, dateshift = polyfit(datesShifted, levels, 4)
     derivative = polynomial.deriv()
-    print(polynomial)
-    print(derivative)
+    
+    #Find slope at final date value
+    finalSlope = np.polyval(derivative, datesShifted[0])
+
+    #Return true if slope is positive
+    if finalSlope > 0:
+        return True
+    else:
+        return False
