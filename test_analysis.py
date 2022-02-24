@@ -25,6 +25,20 @@ def test_polyfit():
     except:
         assert False
 
+def test_relative_risk():
+    stations = build_station_list()
+    testlist = []
+    for i in range(10):
+        testlist.append(relative_risk(stations[i]))
+    assert len(testlist) == 10
+    for j in range(10):
+        if testlist[j] != None:
+            assert testlist[j] < 6
+            assert testlist[j] > -2
+    
+    
+        
+
 
 def test_rising_polynomial():
     #create test data
