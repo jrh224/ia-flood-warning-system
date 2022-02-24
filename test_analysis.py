@@ -37,8 +37,10 @@ def test_relative_risk():
         testlist.append(relative_risk(stations[i]))
     assert len(testlist) == 10
     for j in range(10):
-        assert testlist[j] < 6
-        assert testlist[j] > -2
+        if testlist[j] != None:
+            assert testlist[j] < 6
+            assert testlist[j] > -2
+    
     
         
 
