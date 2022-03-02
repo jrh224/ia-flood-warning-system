@@ -35,7 +35,7 @@ def test_relative_risk():
         if testlist[j] != None:
             assert testlist[j] < 6
             assert testlist[j] > -2
-    
+     
     
         
 
